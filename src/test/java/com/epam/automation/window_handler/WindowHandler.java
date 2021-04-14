@@ -1,4 +1,4 @@
-package window_handler;
+package com.epam.automation.window_handler;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;

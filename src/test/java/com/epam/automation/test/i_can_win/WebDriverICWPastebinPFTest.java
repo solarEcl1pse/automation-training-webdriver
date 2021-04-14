@@ -1,4 +1,4 @@
-package bring_it_on.test;
+package com.epam.automation.test.i_can_win;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -6,17 +6,14 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import page.PastebinResultPagePF;
-import page.PastebinStartPagePF;
+import com.epam.automation.page.PastebinResultPagePF;
+import com.epam.automation.page.PastebinStartPagePF;
 
-public class WebDriverBIOPastebinPFTest {
+public class WebDriverICWPastebinPFTest {
 
-    private final String code = "git config --global user.name  \"New Sheriff in Town\"\n" +
-            "git reset $(git commit-tree HEAD^{tree} -m \"Legacy code\")\n" +
-            "git push origin master --force";
-    private final String syntaxHighlighting = "Bash";
+    private final String code = "Hello from WebDriver";
     private final String pasteExpiration = "10 Minutes";
-    private final String pasteName = "how to gain dominance among developers";
+    private final String pasteName = "helloweb";
     private WebDriver driver;
 
     @BeforeMethod(alwaysRun = true)
@@ -31,13 +28,12 @@ public class WebDriverBIOPastebinPFTest {
         PastebinResultPagePF pastebinResultPagePF = new PastebinStartPagePF(driver)
                 .openPage()
                 .pasteCode(code)
-                .chooseSyntaxHighlighting(syntaxHighlighting)
                 .choosePasteExpiration(pasteExpiration)
                 .pasteName(pasteName)
                 .createNewPaste();
-        Assert.assertEquals(pastebinResultPagePF.getResultNameValue(), pasteName, "Wrong paste name value!");
-        Assert.assertEquals(pastebinResultPagePF.getResultSyntaxHighlightingValue(), syntaxHighlighting, "Wrong syntax highlighting value!");
         Assert.assertEquals(pastebinResultPagePF.getResultCodeValue(), code, "Wrong code value!");
+        Assert.assertEquals(pastebinResultPagePF.getResultPasteExpirationValue(), pasteExpiration, "Wrong paste expiration value!");
+        Assert.assertEquals(pastebinResultPagePF.getResultNameValue(), pasteName, "Wrong paste name value!");
     }
 
     @AfterMethod(alwaysRun = true)

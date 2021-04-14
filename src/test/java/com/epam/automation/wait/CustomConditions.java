@@ -1,4 +1,4 @@
-package wait;
+package com.epam.automation.wait;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.ExpectedCondition;

@@ -1,4 +1,4 @@
-package hardcore.test;
+package com.epam.automation.test.hurt_me_plenty;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -6,12 +6,12 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import page.GoogleCloudPricingCalculatorPagePF;
-import page.GoogleCloudStartPagePF;
-import page.TenMineMailPagePF;
-import window_handler.WindowHandler;
+import com.epam.automation.page.GoogleCloudPricingCalculatorPagePF;
+import com.epam.automation.page.GoogleCloudStartPagePF;
 
-public class WebDriverHardcoreGoogleCloudPFTest {
+import java.util.Locale;
+
+public class WebDriverHMPGoogleCloudPFTest {
 
     private final String searchTerm = "Google Cloud Platform Pricing Calculator";
     private final String section = "Compute Engine";
@@ -36,7 +36,7 @@ public class WebDriverHardcoreGoogleCloudPFTest {
     }
 
     @Test
-    public void successfulGoogleCloudEngineEmailEstimation() {
+    public void successfulGoogleCloudEngineEstimation() {
         GoogleCloudPricingCalculatorPagePF googleCloudPricingCalculatorPage = new GoogleCloudStartPagePF(driver)
                 .openPage()
                 .pasteSearchTerm(searchTerm)
@@ -55,24 +55,12 @@ public class WebDriverHardcoreGoogleCloudPFTest {
                 .chooseDatacenterLocation(datacenterLocation)
                 .chooseCommittedUsage(committedUsage)
                 .selectAddToEstimateButton();
-        WindowHandler windowHandler = new WindowHandler(driver)
-                .openNewTab(driver)
-                .holdTabs()
-                .switchTab(1);
-        TenMineMailPagePF tenMineMailPagePF = new TenMineMailPagePF(driver)
-                .openPage()
-                .copyEmailAddress();
-        windowHandler.switchTab(0);
-        googleCloudPricingCalculatorPage
-                .switchToFrame()
-                .selectEmailEstimateButton()
-                .pasteEmail(tenMineMailPagePF.getEmailAddress())
-                .selectSendEmailButton();
-        windowHandler.switchTab(1);
-        tenMineMailPagePF
-                .waitForEmail()
-                .openEmail();
-        Assert.assertTrue(tenMineMailPagePF.getTotalCost().contains(totalCost), "Total Estimated Cost doesn't equals value got by manual testing!");
+        Assert.assertTrue(googleCloudPricingCalculatorPage.getResultList().getText().contains(vmClass.toLowerCase(Locale.ROOT)), "Wrong 'VM Class' value!");
+        Assert.assertTrue(googleCloudPricingCalculatorPage.getResultList().getText().contains(machineType.split("\\s+")[0]), "Wrong 'Machine type' value!");
+        Assert.assertTrue(googleCloudPricingCalculatorPage.getResultList().getText().contains(datacenterLocation.split("\\s+")[0]), "Wrong 'Datacenter location' value!");
+        Assert.assertTrue(googleCloudPricingCalculatorPage.getResultList().getText().contains(localSsd.split("\\s+")[0]), "Wrong 'Local SSD' value!");
+        Assert.assertTrue(googleCloudPricingCalculatorPage.getResultList().getText().contains(committedUsage), "Wrong 'Committed usage' value");
+        Assert.assertTrue(googleCloudPricingCalculatorPage.getTotalCost().getText().contains(totalCost), "Total Estimated Cost doesn't equals value got by manual testing!");
     }
 
     @AfterMethod(alwaysRun = true)

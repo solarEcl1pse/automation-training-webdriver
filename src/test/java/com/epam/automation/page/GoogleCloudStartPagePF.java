@@ -1,4 +1,4 @@
-package page;
+package com.epam.automation.page;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import wait.CustomConditions;
+import com.epam.automation.wait.CustomConditions;
 
 public class GoogleCloudStartPagePF {
 
